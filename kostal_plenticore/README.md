@@ -11,3 +11,6 @@ sensor:
       host: <IP>
       password: <Password>
 ```
+
+WARNING THIS IS A TEST COMPONENT 
+DEVELOPMENT IS NOT FINISHED
