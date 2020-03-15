@@ -6,31 +6,58 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import (
     CONF_HOST,
-    CONF_PASSWORD
+    CONF_PASSWORD,
+    CONF_MONITORED_CONDITIONS
 )
 from homeassistant.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
+SENSOR_TYPES = {
+    "BatteryPercent": ["devices:local:battery", "SoC", "Kostal Battery", "%", "mdi:power-off"],
+    "BatteryCycles": ["devices:local:battery", "Cycles", "Kostal Battery Cycles", None, "mdi:power-off"],
+    "HomeGridPower": ["devices:local", "HomeGrid_P", "Kostal power grid", "W", "mdi:power-off"],
+    "HomeOwnPower": ["devices:local", "HomeOwn_P", "Kostal home power", "W", "mdi:power-off"],
+    "HomePVPower": ["devices:local", "HomePv_P", "Kostal home power from PV", "W", "mdi:power-off"],
+    "HomeBatteryPower": ["devices:local", "HomeBat_P", "Kostal home power from Battery", "W", "mdi:power-off"],
+    "HomeGritPower": ["devices:local", "HomeGrid_P", "Kostal home power from Grid", "W", "mdi:power-off"],
+    "PVPower": ["devices:local", "Dc_P", "Kostal pv power", "W", "mdi:power-off"],
+    "AutarkyDay": ["scb:statistic:EnergyFlow", "Statistic:Autarky:Day", "Kostal autarky day", "%", "mdi:power-off"],
+    "AutarkyMonth": ["scb:statistic:EnergyFlow", "Statistic:Autarky:Month", "Kostal autarky Month", "%", "mdi:power-off"],
+    "AutarkyTotal": ["scb:statistic:EnergyFlow", "Statistic:Autarky:Total", "Kostal autarky Total", "%", "mdi:power-off"],
+    "AutarkyYear": ["scb:statistic:EnergyFlow", "Statistic:Autarky:Year", "Kostal autarky Year", "%", "mdi:power-off"],
+    "CO2SavingDay": ["scb:statistic:EnergyFlow", "Statistic:CO2Saving:Day", "Kostal CO2 Saving Day", "kg", "mdi:power-off"],
+    "CO2SavingMonth": ["scb:statistic:EnergyFlow", "Statistic:CO2Saving:Month", "Kostal CO2 Saving Month", "kg", "mdi:power-off"],
+    "CO2SavingTotal": ["scb:statistic:EnergyFlow", "Statistic:CO2Saving:Total", "Kostal CO2 Saving Total", "kg", "mdi:power-off"],
+    "CO2SavingYear": ["scb:statistic:EnergyFlow", "Statistic:CO2Saving:Year", "Kostal CO2 Saving Year", "kg", "mdi:power-off"],
+}
+
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_HOST): cv.string,
-        vol.Required(CONF_PASSWORD): cv.string
+        vol.Required(CONF_PASSWORD): cv.string,
+        vol.Optional(CONF_MONITORED_CONDITIONS): vol.All(
+            cv.ensure_list, [vol.In(SENSOR_TYPES)]
+        ),
     }
 )
+
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the sensor platform."""
 
     host = config[CONF_HOST]
     password = config[CONF_PASSWORD]
+    monitoredcondition = config[CONF_MONITORED_CONDITIONS]
+    print(monitoredcondition)
 
     """ Login to Kostal Plenticore """
     con = kostalplenticore.connect(host, password)
     con.login()
 
-    add_entities([plenticore(con, "Kostal Battery", "devices:local:battery", "SoC", "%")])
-    add_entities([plenticore(con, "Kostal HomeGridPower", "devices:local", "HomeGrid_P", "W")])
+    for sensor in monitoredcondition:
+        add_entities([plenticore(con,  SENSOR_TYPES[sensor][2], SENSOR_TYPES[sensor][0], SENSOR_TYPES[sensor][1], SENSOR_TYPES[sensor][3])])
+        #add_entities([plenticore(con, "Kostal HomeGridPower", "devices:local", "HomeGrid_P", "W")])
 
 
 class plenticore(Entity):
