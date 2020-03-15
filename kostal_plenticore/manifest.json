@@ -1,9 +1,8 @@
 {
   "domain": "kostal_plenticore",
-  "name": "Kostal Plenticore Sensor",
-  "documentation": "https://www.home-assistant.io/integrations/growatt_server/",
+  "name": "Kostal Plenticore Inverter",
+  "documentation": "https://www.home-assistant.io/integrations/kostalplenticore/",
   "dependencies": [],
-  "codeowners": [],
   "requirements": ["kostalplenticore"],
   "codeowners": [
     "@ITTV-Tools"

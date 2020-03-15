@@ -1,1 +1,1 @@
-"""The example sensor integration."""
+"""The Kostal Inverter sensor integration."""
