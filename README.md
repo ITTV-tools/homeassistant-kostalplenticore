@@ -1,7 +1,7 @@
 # homeassistant-kostalplenticore
-=================================================
+============================================================
 Home Assistant Component for Kostal Plenticore 
-[![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
+<a href="https://www.buymeacoffee.com/ittv" target="_blank"><img height="41px" width="167px" src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee"></a>
 
 ### Installation
 
@@ -33,5 +33,3 @@ sensor:
         - CO2SavingYear
 ```
 
-[buymecoffeebadge]: "https://cdn.buymeacoffee.com/buttons/default-blue.png"
-[buymecoffee]: "https://www.buymeacoffee.com/ittv"
