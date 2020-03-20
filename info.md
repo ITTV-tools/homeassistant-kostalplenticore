@@ -13,7 +13,7 @@ Copy this folder to `<config_dir>/custom_components/kostal_plenticore/`.
 ### HACS
 Search for Kostal Plenticore
 
-###Configuration
+### Configuration
 
 Add the following to your `configuration.yaml` file:
 
