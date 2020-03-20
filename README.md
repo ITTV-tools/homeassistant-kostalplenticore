@@ -26,10 +26,12 @@ sensor:
       monitored_conditions:
         - BatteryPercent
         - BatteryCycles
+        - BatteryPower
         - HomeGridPower
         - HomeOwnPower
         - HomePVPower
         - HomeBatteryPower
+        - GridPower
         - PVPower
         - AutarkyDay
         - AutarkyMonth
