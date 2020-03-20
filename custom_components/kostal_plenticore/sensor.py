@@ -1,4 +1,5 @@
 """Kostal Plenticore Inverter."""
+
 import logging
 
 import kostalplenticore
@@ -26,7 +27,14 @@ SENSOR_TYPES = {
         "Cycles",
         "Kostal Battery Cycles",
         None,
-        "mdi:recycle-variant",
+        "mdi:recycle",
+    ],
+    "BatteryPower": [
+        "devices:local:battery",
+        "P",
+        "Kostal Battery Power",
+        "W",
+        "mdi:recycle",
     ],
     "HomeOwnPower": [
         "devices:local",
@@ -53,6 +61,13 @@ SENSOR_TYPES = {
         "devices:local",
         "HomeGrid_P",
         "Kostal home power from Grid",
+        "W",
+        "mdi:transmission-tower",
+    ],
+    "GridPower": [
+        "devices:local",
+        "Grid_P",
+        "Kostal power Grid",
         "W",
         "mdi:transmission-tower",
     ],
