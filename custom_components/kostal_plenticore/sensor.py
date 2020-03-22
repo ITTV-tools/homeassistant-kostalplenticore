@@ -36,13 +36,7 @@ SENSOR_TYPES = {
         "W",
         "mdi:recycle",
     ],
-    "HomeOwnPower": [
-        "devices:local",
-        "HomeOwn_P",
-        "kostal home power",
-        "W",
-        "mdi:home",
-    ],
+    "HomeOwnPower": ["devices:local", "Home_P", "kostal home power", "W", "mdi:home"],
     "HomePVPower": [
         "devices:local",
         "HomePv_P",
