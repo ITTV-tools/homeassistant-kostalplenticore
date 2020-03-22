@@ -32,7 +32,7 @@ sensor:
         - HomePVPower
         - HomeBatteryPower
         - GridPower
-        - PVPower
+        - DCPower
         - AutarkyDay
         - AutarkyMonth
         - AutarkyTotal
@@ -41,5 +41,11 @@ sensor:
         - CO2SavingMonth
         - CO2SavingTotal
         - CO2SavingYear
+        - PV1Power
+        - PV1Voltage
+        - PV1Current
+        - PV2Power
+        - PV2Voltage
+        - PV2Current
 ```
 
