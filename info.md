@@ -33,6 +33,7 @@ sensor:
         - HomeBatteryPower
         - GridPower
         - DCPower
+        - PVPower
         - AutarkyDay
         - AutarkyMonth
         - AutarkyTotal
