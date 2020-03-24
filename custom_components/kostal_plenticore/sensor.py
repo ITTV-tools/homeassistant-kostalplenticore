@@ -95,6 +95,7 @@ SENSOR_TYPES = {
         "A",
         "mdi:solar-power",
     ],
+    "PVPower": ["pv1+2", "P", "Kostal pv power", "W", "mdi:solar-power"],
     "DCPower": ["devices:local", "Dc_P", "Kostal DC power", "W", "mdi:power-cycle"],
     "AutarkyDay": [
         "scb:statistic:EnergyFlow",
@@ -158,7 +159,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_HOST): cv.string,
         vol.Required(CONF_PASSWORD): cv.string,
-        vol.Optional(CONF_MONITORED_CONDITIONS): vol.All(
+        vol.Optional(CONF_MONITORED_CONDITIONS, default=[]): vol.All(
             cv.ensure_list, [vol.In(SENSOR_TYPES)]
         ),
     }
@@ -175,7 +176,8 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     """ Login to Kostal Plenticore """
     con = kostalplenticore.connect(host, password)
     con.login()
-
+    if len(monitoredcondition) == 0:
+        monitoredcondition = SENSOR_TYPES.keys()
     for sensor in monitoredcondition:
         add_entities(
             [
@@ -194,6 +196,20 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 class plenticore(Entity):
     """Representation of a Sensor."""
 
+    def getData(self):
+        """Get sensor data."""
+        if self.moduleid == "pv1+2":
+            pv1 = int(
+                self.api.getProcessdata("devices:local:pv1", [self.id])[0]["value"]
+            )
+            pv2 = int(
+                self.api.getProcessdata("devices:local:pv2", [self.id])[0]["value"]
+            )
+            value = pv1 + pv2
+        else:
+            value = int(self.api.getProcessdata(self.moduleid, [self.id])[0]["value"])
+        return value
+
     def __init__(self, con, sensorname, moduleid, id, unit, icon):
         """Initialize the sensor."""
         self.api = con
@@ -202,7 +218,7 @@ class plenticore(Entity):
         self.id = id
         self.mdi = icon
         self.unit = unit
-        self._state = int(self.api.getProcessdata(self.moduleid, [self.id])[0]["value"])
+        self._state = self.getData()
 
     @property
     def name(self):
@@ -220,6 +236,11 @@ class plenticore(Entity):
         return self._state
 
     @property
+    def available(self):
+        """Could the device be accessed during the last update call."""
+        return True
+
+    @property
     def unit_of_measurement(self):
         """Return the unit of measurement."""
         return self.unit
@@ -230,4 +251,4 @@ class plenticore(Entity):
         This is the only method that should fetch new data for Home Assistant.
         """
         # self._state = 23
-        self._state = int(self.api.getProcessdata(self.moduleid, [self.id])[0]["value"])
+        self._state = self.getData()
