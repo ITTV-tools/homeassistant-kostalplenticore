@@ -48,5 +48,15 @@ sensor:
         - PV2Power
         - PV2Voltage
         - PV2Current
+        - ACFrequency
+        - ACL1Current
+        - ACL1Power
+        - ACL1Voltage
+        - ACL2Current
+        - ACL2Power
+        - ACL2Voltage
+        - ACL3Current
+        - ACL3Power
+        - ACL3Voltage
 ```
 
