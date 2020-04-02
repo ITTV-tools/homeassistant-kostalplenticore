@@ -153,6 +153,58 @@ SENSOR_TYPES = {
         "g",
         "mdi:molecule-co2",
     ],
+    "ACFrequency": [
+        "devices:local:ac",
+        "Frequency",
+        "Kostal Frequency",
+        "hz",
+        "mdi:power-plug",
+    ],
+    "ACL1Current": [
+        "devices:local:ac",
+        "L1_I",
+        "Kostal L1 Current",
+        "A",
+        "mdi:power-plug",
+    ],
+    "ACL1Power": ["devices:local:ac", "L1_P", "Kostal L1 Power", "W", "mdi:power-plug"],
+    "ACL1Voltage": [
+        "devices:local:ac",
+        "L1_U",
+        "Kostal L1 Voltage",
+        "V",
+        "mdi:power-plug",
+    ],
+    "ACL2Current": [
+        "devices:local:ac",
+        "L2_I",
+        "Kostal L2 Current",
+        "A",
+        "mdi:power-plug",
+    ],
+    "ACL2Power": ["devices:local:ac", "L2_P", "Kostal L2 Power", "W", "mdi:power-plug"],
+    "ACL2Voltage": [
+        "devices:local:ac",
+        "L2_U",
+        "Kostal L2 Voltage",
+        "V",
+        "mdi:power-plug",
+    ],
+    "ACL3Current": [
+        "devices:local:ac",
+        "L3_I",
+        "Kostal L3 Current",
+        "A",
+        "mdi:power-plug",
+    ],
+    "ACL3Power": ["devices:local:ac", "L3_P", "Kostal L3 Power", "W", "mdi:power-plug"],
+    "ACL3Voltage": [
+        "devices:local:ac",
+        "L3_U",
+        "Kostal L3 Voltage",
+        "V",
+        "mdi:power-plug",
+    ],
 }
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -206,6 +258,15 @@ class plenticore(Entity):
                 self.api.getProcessdata("devices:local:pv2", [self.id])[0]["value"]
             )
             value = pv1 + pv2
+        elif (
+            self.moduleid == "Frequency"
+            or self.id == "L3_I"
+            or self.id == "L2_I"
+            or self.id == "L1_I"
+        ):
+            value = (
+                "%.2f" % self.api.getProcessdata(self.moduleid, [self.id])[0]["value"]
+            )
         else:
             value = int(self.api.getProcessdata(self.moduleid, [self.id])[0]["value"])
         return value
