@@ -1,4 +1,4 @@
-"""Kostal Plenticore Inverter."""
+self.moduleid"""Kostal Plenticore Inverter."""
 
 import logging
 
@@ -259,7 +259,7 @@ class plenticore(Entity):
             )
             value = pv1 + pv2
         elif (
-            self.moduleid == "Frequency"
+            self.id == "Frequency"
             or self.id == "L3_I"
             or self.id == "L2_I"
             or self.id == "L1_I"
