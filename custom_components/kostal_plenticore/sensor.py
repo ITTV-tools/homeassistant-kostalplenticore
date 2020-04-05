@@ -1,4 +1,4 @@
-self.moduleid"""Kostal Plenticore Inverter."""
+"""Kostal Plenticore Inverter."""
 
 import logging
 
