@@ -4,7 +4,7 @@ Home Assistant Component for Kostal Plenticore
 
 <a href="https://www.buymeacoffee.com/ittv" target="_blank"><img height="41px" width="167px" src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee"></a>
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs)
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs)
 
 ### Installation
 
@@ -58,5 +58,25 @@ sensor:
         - ACL3Current
         - ACL3Power
         - ACL3Voltage
+        - HomeConsumptionDay
+        - HomeConsumptionMonth
+        - HomeConsumptionTotal
+        - HomeConsumptionYear
+        - HomeConsumptionFromBatDay
+        - HomeConsumptionFromBatMonth
+        - HomeConsumptionFromBatTotal
+        - HomeConsumptionFromBatYear
+        - HomeConsumptionFromGridDay
+        - HomeConsumptionFromGridMonth
+        - HomeConsumptionFromGridTotal
+        - HomeConsumptionFromGridYear
+        - HomeConsumptionFromPVDay
+        - HomeConsumptionFromPVMonth
+        - HomeConsumptionFromPVTotal
+        - HomeConsumptionFromPVYear
+        - HomeConsumptionYieldDay
+        - HomeConsumptionYieldMonth
+        - HomeConsumptionYieldTotal
+        - HomeConsumptionYieldYear
 ```
 
