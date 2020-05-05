@@ -58,5 +58,25 @@ sensor:
         - ACL3Current
         - ACL3Power
         - ACL3Voltage
+        - HomeConsumptionDay
+        - HomeConsumptionMonth
+        - HomeConsumptionTotal
+        - HomeConsumptionYear
+        - HomeConsumptionFromBatDay
+        - HomeConsumptionFromBatMonth
+        - HomeConsumptionFromBatTotal
+        - HomeConsumptionFromBatYear
+        - HomeConsumptionFromGridDay
+        - HomeConsumptionFromGridMonth
+        - HomeConsumptionFromGridTotal
+        - HomeConsumptionFromGridYear
+        - HomeConsumptionFromPVDay
+        - HomeConsumptionFromPVMonth
+        - HomeConsumptionFromPVTotal
+        - HomeConsumptionFromPVYear
+        - HomeConsumptionYieldDay
+        - HomeConsumptionYieldMonth
+        - HomeConsumptionYieldTotal
+        - HomeConsumptionYieldYear
 ```
 
