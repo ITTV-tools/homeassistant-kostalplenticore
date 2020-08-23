@@ -6,7 +6,7 @@ import kostalplenticore
 import voluptuous as vol
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.const import CONF_HOST, CONF_MONITORED_CONDITIONS, CONF_PASSWORD
+from homeassistant.const import CONF_HOST, CONF_MONITORED_CONDITIONS, CONF_PASSWORD, ENERGY_WATT_HOUR, ENERGY_KILO_WATT_HOUR, ENERGY_KILO_WATT_HOUR, MASS_GRAMS, FREQUENCY_HERTZ, ELECTRICAL_CURRENT_AMPERE, VOLT, UNIT_PERCENTAGE, POWER_WATT
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 
@@ -19,7 +19,7 @@ SENSOR_TYPES = {
         "devices:local:battery",
         "SoC",
         "kostal battery",
-        "%",
+        UNIT_PERCENTAGE,
         "mdi:battery-high",
     ],
     "BatteryCycles": [
@@ -33,316 +33,316 @@ SENSOR_TYPES = {
         "devices:local:battery",
         "P",
         "kostal battery power",
-        "W",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:recycle",
     ],
-    "HomeOwnPower": ["devices:local", "Home_P", "kostal home power", "W", "mdi:home"],
+    "HomeOwnPower": ["devices:local", "Home_P", "kostal home power", POWER_WATT, "mdi:home"],
     "HomePVPower": [
         "devices:local",
         "HomePv_P",
         "kostal home power from PV",
-        "W",
+        POWER_WATT,
         "mdi:solar-power",
     ],
     "HomeBatteryPower": [
         "devices:local",
         "HomeBat_P",
         "Kostal home power from battery",
-        "W",
+        POWER_WATT,
         "mdi:battery-charging-90",
     ],
     "HomeGridPower": [
         "devices:local",
         "HomeGrid_P",
         "Kostal home power from grid",
-        "W",
+        POWER_WATT,
         "mdi:transmission-tower",
     ],
     "GridPower": [
         "devices:local",
         "Grid_P",
         "Kostal power grid",
-        "W",
+        POWER_WATT,
         "mdi:transmission-tower",
     ],
-    "PV1Power": ["devices:local:pv1", "P", "Kostal pv1 power", "W", "mdi:solar-power"],
+    "PV1Power": ["devices:local:pv1", "P", "Kostal pv1 power", POWER_WATT, "mdi:solar-power"],
     "PV1Voltage": [
         "devices:local:pv1",
         "U",
         "Kostal pv1 voltage",
-        "V",
+        VOLT,
         "mdi:solar-power",
     ],
     "PV1Current": [
         "devices:local:pv1",
         "I",
         "Kostal pv1 current",
-        "A",
+        ELECTRICAL_CURRENT_AMPERE,
         "mdi:solar-power",
     ],
-    "PV2Power": ["devices:local:pv2", "P", "Kostal pv2 power", "W", "mdi:solar-power"],
+    "PV2Power": ["devices:local:pv2", "P", "Kostal pv2 power", POWER_WATT, "mdi:solar-power"],
     "PV2Voltage": [
         "devices:local:pv2",
         "U",
         "Kostal pv2 voltage",
-        "V",
+        VOLT,
         "mdi:solar-power",
     ],
     "PV2Current": [
         "devices:local:pv2",
         "I",
         "Kostal pv2 current",
-        "A",
+        ELECTRICAL_CURRENT_AMPERE,
         "mdi:solar-power",
     ],
-    "PVPower": ["pv1+2", "P", "Kostal pv power", "W", "mdi:solar-power"],
-    "DCPower": ["devices:local", "Dc_P", "Kostal DC power", "W", "mdi:power-cycle"],
+    "PVPower": ["pv1+2", "P", "Kostal pv power", POWER_WATT, "mdi:solar-power"],
+    "DCPower": ["devices:local", "Dc_P", "Kostal DC power", POWER_WATT, "mdi:power-cycle"],
     "AutarkyDay": [
         "scb:statistic:EnergyFlow",
         "Statistic:Autarky:Day",
         "Kostal autarky day",
-        "%",
+        UNIT_PERCENTAGE,
         "mdi:power-plug",
     ],
     "AutarkyMonth": [
         "scb:statistic:EnergyFlow",
         "Statistic:Autarky:Month",
         "Kostal autarky Month",
-        "%",
+        UNIT_PERCENTAGE,
         "mdi:power-plug",
     ],
     "AutarkyTotal": [
         "scb:statistic:EnergyFlow",
         "Statistic:Autarky:Total",
         "Kostal autarky Total",
-        "%",
+        UNIT_PERCENTAGE,
         "mdi:power-plug",
     ],
     "AutarkyYear": [
         "scb:statistic:EnergyFlow",
         "Statistic:Autarky:Year",
         "Kostal autarky Year",
-        "%",
+        UNIT_PERCENTAGE,
         "mdi:power-plug",
     ],
     "HomeConsumptionDay": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHome:Day",
         "Kostal Home consumption Day",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionMonth": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHome:Month",
         "Kostal Home consumption Month",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionTotal": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHome:Total",
         "Kostal Home consumption Total",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionYear": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHome:Year",
         "Kostal Home consumption Year",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromBatDay": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomeBat:Day",
         "Kostal Home consumption from Battery Day",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromBatMonth": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomeBat:Month",
         "Kostal Home consumption from Battery Month",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromBatTotal": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomeBat:Total",
         "Kostal Home consumption from Battery Total",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromBatYear": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomeBat:Year",
         "Kostal Home consumption from Battery Year",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromGridDay": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomeGrid:Day",
         "Kostal Home consumption from Grid Day",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromGridMonth": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomeGrid:Month",
         "Kostal Home consumption from Grid Month",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromGridTotal": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomeGrid:Total",
         "Kostal Home consumption from Grid Total",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromGridYear": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomeGrid:Year",
         "Kostal Home consumption from Grid Year",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromPVDay": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomePv:Day",
         "Kostal Home consumption from PV Day",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromPVMonth": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomePv:Month",
         "Kostal Home consumption from PV Month",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromPVTotal": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomePv:Total",
         "Kostal Home consumption from PV Total",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionFromPVYear": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomePv:Year",
         "Kostal Home consumption from PV Year",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionYieldDay": [
         "scb:statistic:EnergyFlow",
         "Statistic:Yield:Day",
         "Kostal Yield Day",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionYieldMonth": [
         "scb:statistic:EnergyFlow",
         "Statistic:Yield:Month",
         "Kostal Yield Month",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionYieldTotal": [
         "scb:statistic:EnergyFlow",
         "Statistic:Yield:Total",
         "Kostal Yield Total",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "HomeConsumptionYieldYear": [
         "scb:statistic:EnergyFlow",
         "Statistic:Yield:Year",
         "Kostal Yield Year",
-        "Wh",
+        ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
     "CO2SavingDay": [
         "scb:statistic:EnergyFlow",
         "Statistic:CO2Saving:Day",
         "Kostal CO2 Saving Day",
-        "g",
+        MASS_GRAMS,
         "mdi:molecule-co2",
     ],
     "CO2SavingMonth": [
         "scb:statistic:EnergyFlow",
         "Statistic:CO2Saving:Month",
         "Kostal CO2 Saving Month",
-        "g",
+        MASS_GRAMS,
         "mdi:molecule-co2",
     ],
     "CO2SavingTotal": [
         "scb:statistic:EnergyFlow",
         "Statistic:CO2Saving:Total",
         "Kostal CO2 Saving Total",
-        "g",
+        MASS_GRAMS,
         "mdi:molecule-co2",
     ],
     "CO2SavingYear": [
         "scb:statistic:EnergyFlow",
         "Statistic:CO2Saving:Year",
         "Kostal CO2 Saving Year",
-        "g",
+        MASS_GRAMS,
         "mdi:molecule-co2",
     ],
     "ACFrequency": [
         "devices:local:ac",
         "Frequency",
         "Kostal Frequency",
-        "hz",
+        FREQUENCY_HERTZ,
         "mdi:power-plug",
     ],
     "ACL1Current": [
         "devices:local:ac",
         "L1_I",
         "Kostal L1 Current",
-        "A",
+        ELECTRICAL_CURRENT_AMPERE,
         "mdi:power-plug",
     ],
-    "ACL1Power": ["devices:local:ac", "L1_P", "Kostal L1 Power", "W", "mdi:power-plug"],
+    "ACL1Power": ["devices:local:ac", "L1_P", "Kostal L1 Power", POWER_WATT, "mdi:power-plug"],
     "ACL1Voltage": [
         "devices:local:ac",
         "L1_U",
         "Kostal L1 Voltage",
-        "V",
+        VOLT,
         "mdi:power-plug",
     ],
     "ACL2Current": [
         "devices:local:ac",
         "L2_I",
         "Kostal L2 Current",
-        "A",
+        ELECTRICAL_CURRENT_AMPERE,
         "mdi:power-plug",
     ],
-    "ACL2Power": ["devices:local:ac", "L2_P", "Kostal L2 Power", "W", "mdi:power-plug"],
+    "ACL2Power": ["devices:local:ac", "L2_P", "Kostal L2 Power", POWER_WATT, "mdi:power-plug"],
     "ACL2Voltage": [
         "devices:local:ac",
         "L2_U",
         "Kostal L2 Voltage",
-        "V",
+        VOLT,
         "mdi:power-plug",
     ],
     "ACL3Current": [
         "devices:local:ac",
         "L3_I",
         "Kostal L3 Current",
-        "A",
+        ELECTRICAL_CURRENT_AMPERE,
         "mdi:power-plug",
     ],
-    "ACL3Power": ["devices:local:ac", "L3_P", "Kostal L3 Power", "W", "mdi:power-plug"],
+    "ACL3Power": ["devices:local:ac", "L3_P", "Kostal L3 Power", POWER_WATT, "mdi:power-plug"],
     "ACL3Voltage": [
         "devices:local:ac",
         "L3_U",
         "Kostal L3 Voltage",
-        "V",
+        VOLT,
         "mdi:power-plug",
     ],
 }
@@ -407,6 +407,8 @@ class plenticore(Entity):
             value = (
                 "%.2f" % self.api.getProcessdata(self.moduleid, [self.id])[0]["value"]
             )
+        elif (self._unit_of_measurement == ENERGY_KILO_WATT_HOUR):
+            value = "%.2f" % (self.api.getProcessdata(self.moduleid, [self.id])[0]["value"] / 1000)
         else:
             value = int(self.api.getProcessdata(self.moduleid, [self.id])[0]["value"])
         return value
@@ -418,7 +420,7 @@ class plenticore(Entity):
         self.moduleid = moduleid
         self.id = id
         self.mdi = icon
-        self.unit = unit
+        self._unit_of_measurement = unit
         self._state = self.getData()
 
     @property
@@ -444,7 +446,7 @@ class plenticore(Entity):
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement."""
-        return self.unit
+        return self._unit_of_measurement
 
     def update(self):
         """Fetch new state data for the sensor.
