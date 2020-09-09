@@ -6,7 +6,20 @@ import kostalplenticore
 import voluptuous as vol
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.const import CONF_HOST, CONF_MONITORED_CONDITIONS, CONF_PASSWORD, ENERGY_WATT_HOUR, ENERGY_KILO_WATT_HOUR, ENERGY_KILO_WATT_HOUR, MASS_GRAMS, FREQUENCY_HERTZ, ELECTRICAL_CURRENT_AMPERE, VOLT, UNIT_PERCENTAGE, POWER_WATT
+from homeassistant.const import (
+    CONF_HOST,
+    CONF_MONITORED_CONDITIONS,
+    CONF_PASSWORD,
+    ENERGY_WATT_HOUR,
+    ENERGY_KILO_WATT_HOUR,
+    ENERGY_KILO_WATT_HOUR,
+    MASS_GRAMS,
+    FREQUENCY_HERTZ,
+    ELECTRICAL_CURRENT_AMPERE,
+    VOLT,
+    UNIT_PERCENTAGE,
+    POWER_WATT,
+)
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 
@@ -36,7 +49,13 @@ SENSOR_TYPES = {
         ENERGY_KILO_WATT_HOUR,
         "mdi:recycle",
     ],
-    "HomeOwnPower": ["devices:local", "Home_P", "kostal home power", POWER_WATT, "mdi:home"],
+    "HomeOwnPower": [
+        "devices:local",
+        "Home_P",
+        "kostal home power",
+        POWER_WATT,
+        "mdi:home",
+    ],
     "HomePVPower": [
         "devices:local",
         "HomePv_P",
@@ -65,7 +84,13 @@ SENSOR_TYPES = {
         POWER_WATT,
         "mdi:transmission-tower",
     ],
-    "PV1Power": ["devices:local:pv1", "P", "Kostal pv1 power", POWER_WATT, "mdi:solar-power"],
+    "PV1Power": [
+        "devices:local:pv1",
+        "P",
+        "Kostal pv1 power",
+        POWER_WATT,
+        "mdi:solar-power",
+    ],
     "PV1Voltage": [
         "devices:local:pv1",
         "U",
@@ -80,7 +105,13 @@ SENSOR_TYPES = {
         ELECTRICAL_CURRENT_AMPERE,
         "mdi:solar-power",
     ],
-    "PV2Power": ["devices:local:pv2", "P", "Kostal pv2 power", POWER_WATT, "mdi:solar-power"],
+    "PV2Power": [
+        "devices:local:pv2",
+        "P",
+        "Kostal pv2 power",
+        POWER_WATT,
+        "mdi:solar-power",
+    ],
     "PV2Voltage": [
         "devices:local:pv2",
         "U",
@@ -96,7 +127,13 @@ SENSOR_TYPES = {
         "mdi:solar-power",
     ],
     "PVPower": ["pv1+2", "P", "Kostal pv power", POWER_WATT, "mdi:solar-power"],
-    "DCPower": ["devices:local", "Dc_P", "Kostal DC power", POWER_WATT, "mdi:power-cycle"],
+    "DCPower": [
+        "devices:local",
+        "Dc_P",
+        "Kostal DC power",
+        POWER_WATT,
+        "mdi:power-cycle",
+    ],
     "AutarkyDay": [
         "scb:statistic:EnergyFlow",
         "Statistic:Autarky:Day",
@@ -307,7 +344,13 @@ SENSOR_TYPES = {
         ELECTRICAL_CURRENT_AMPERE,
         "mdi:power-plug",
     ],
-    "ACL1Power": ["devices:local:ac", "L1_P", "Kostal L1 Power", POWER_WATT, "mdi:power-plug"],
+    "ACL1Power": [
+        "devices:local:ac",
+        "L1_P",
+        "Kostal L1 Power",
+        POWER_WATT,
+        "mdi:power-plug",
+    ],
     "ACL1Voltage": [
         "devices:local:ac",
         "L1_U",
@@ -322,7 +365,13 @@ SENSOR_TYPES = {
         ELECTRICAL_CURRENT_AMPERE,
         "mdi:power-plug",
     ],
-    "ACL2Power": ["devices:local:ac", "L2_P", "Kostal L2 Power", POWER_WATT, "mdi:power-plug"],
+    "ACL2Power": [
+        "devices:local:ac",
+        "L2_P",
+        "Kostal L2 Power",
+        POWER_WATT,
+        "mdi:power-plug",
+    ],
     "ACL2Voltage": [
         "devices:local:ac",
         "L2_U",
@@ -337,7 +386,13 @@ SENSOR_TYPES = {
         ELECTRICAL_CURRENT_AMPERE,
         "mdi:power-plug",
     ],
-    "ACL3Power": ["devices:local:ac", "L3_P", "Kostal L3 Power", POWER_WATT, "mdi:power-plug"],
+    "ACL3Power": [
+        "devices:local:ac",
+        "L3_P",
+        "Kostal L3 Power",
+        POWER_WATT,
+        "mdi:power-plug",
+    ],
     "ACL3Voltage": [
         "devices:local:ac",
         "L3_U",
@@ -407,10 +462,20 @@ class plenticore(Entity):
             value = (
                 "%.2f" % self.api.getProcessdata(self.moduleid, [self.id])[0]["value"]
             )
-        elif (self._unit_of_measurement == ENERGY_KILO_WATT_HOUR):
-            value = "%.2f" % (self.api.getProcessdata(self.moduleid, [self.id])[0]["value"] / 1000)
+        elif self._unit_of_measurement == ENERGY_KILO_WATT_HOUR:
+            try:
+                value = "%.2f" % (
+                    self.api.getProcessdata(self.moduleid, [self.id])[0]["value"] / 1000
+                )
+            except:
+                value = 0
         else:
-            value = int(self.api.getProcessdata(self.moduleid, [self.id])[0]["value"])
+            try:
+                value = int(
+                    self.api.getProcessdata(self.moduleid, [self.id])[0]["value"]
+                )
+            except:
+                value = 0
         return value
 
     def __init__(self, con, sensorname, moduleid, id, unit, icon):
