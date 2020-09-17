@@ -17,7 +17,7 @@ from homeassistant.const import (
     FREQUENCY_HERTZ,
     ELECTRICAL_CURRENT_AMPERE,
     VOLT,
-    UNIT_PERCENTAGE,
+    PERCENTAGE,
     POWER_WATT,
 )
 import homeassistant.helpers.config_validation as cv
@@ -32,7 +32,7 @@ SENSOR_TYPES = {
         "devices:local:battery",
         "SoC",
         "kostal battery",
-        UNIT_PERCENTAGE,
+        PERCENTAGE,
         "mdi:battery-high",
     ],
     "BatteryCycles": [
@@ -138,28 +138,28 @@ SENSOR_TYPES = {
         "scb:statistic:EnergyFlow",
         "Statistic:Autarky:Day",
         "Kostal autarky day",
-        UNIT_PERCENTAGE,
+        PERCENTAGE,
         "mdi:power-plug",
     ],
     "AutarkyMonth": [
         "scb:statistic:EnergyFlow",
         "Statistic:Autarky:Month",
         "Kostal autarky Month",
-        UNIT_PERCENTAGE,
+        PERCENTAGE,
         "mdi:power-plug",
     ],
     "AutarkyTotal": [
         "scb:statistic:EnergyFlow",
         "Statistic:Autarky:Total",
         "Kostal autarky Total",
-        UNIT_PERCENTAGE,
+        PERCENTAGE,
         "mdi:power-plug",
     ],
     "AutarkyYear": [
         "scb:statistic:EnergyFlow",
         "Statistic:Autarky:Year",
         "Kostal autarky Year",
-        UNIT_PERCENTAGE,
+        PERCENTAGE,
         "mdi:power-plug",
     ],
     "HomeConsumptionDay": [
