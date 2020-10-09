@@ -78,5 +78,10 @@ sensor:
         - HomeConsumptionYieldMonth
         - HomeConsumptionYieldTotal
         - HomeConsumptionYieldYear
+        - OwnConsumptionRateDay
+        - OwnConsumptionRateMonth
+        - OwnConsumptionRateTotal
+        - OwnConsumptionRateYear
+        
 ```
 
