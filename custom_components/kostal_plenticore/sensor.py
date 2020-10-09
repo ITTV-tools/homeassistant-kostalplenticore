@@ -400,6 +400,34 @@ SENSOR_TYPES = {
         VOLT,
         "mdi:power-plug",
     ],
+    "OwnConsumptionRateDay": [
+        "scb:statistic:EnergyFlow",
+        "Statistic:OwnConsumptionRate:Day",
+        "Kostal OwnConsumptionRate Day",
+        PERCENTAGE,
+        "mdi:percent",
+    ],
+    "OwnConsumptionRateMonth": [
+        "scb:statistic:EnergyFlow",
+        "Statistic:OwnConsumptionRate:Month",
+        "Kostal OwnConsumptionRate Month",
+        PERCENTAGE,
+        "mdi:percent",
+    ],
+    "OwnConsumptionRateTotal": [
+        "scb:statistic:EnergyFlow",
+        "Statistic:OwnConsumptionRate:Total",
+        "Kostal OwnConsumptionRate Total",
+        PERCENTAGE,
+        "mdi:percent",
+    ],
+    "OwnConsumptionRateYear": [
+        "scb:statistic:EnergyFlow",
+        "Statistic:OwnConsumptionRate:Year",
+        "Kostal OwnConsumptionRate Year",
+        PERCENTAGE,
+        "mdi:percent",
+    ],
 }
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
