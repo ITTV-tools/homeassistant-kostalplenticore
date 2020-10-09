@@ -46,7 +46,7 @@ SENSOR_TYPES = {
         "devices:local:battery",
         "P",
         "kostal battery power",
-        ENERGY_KILO_WATT_HOUR,
+        POWER_WATT,
         "mdi:recycle",
     ],
     "HomeOwnPower": [
