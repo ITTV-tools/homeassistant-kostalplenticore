@@ -414,6 +414,13 @@ SENSOR_TYPES = {
         PERCENTAGE,
         "mdi:percent",
     ],
+    "OwnConsumptionRateMonth": [
+        "scb:statistic:EnergyFlow",
+        "Statistic:OwnConsumptionRate:Month",
+        "Kostal OwnConsumptionRate Month",
+        PERCENTAGE,
+        "mdi:percent",
+    ],
     "OwnConsumptionRateTotal": [
         "scb:statistic:EnergyFlow",
         "Statistic:OwnConsumptionRate:Total",
