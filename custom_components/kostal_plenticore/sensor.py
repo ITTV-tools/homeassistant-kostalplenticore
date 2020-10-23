@@ -435,6 +435,20 @@ SENSOR_TYPES = {
         PERCENTAGE,
         "mdi:percent",
     ],
+    "MinSoC": [
+        "devices:local",
+        "Battery:MinSoc",
+        "Kostal Min SOC",
+        PERCENTAGE,
+        "mdi:percent",
+    ],
+    "SmartBatteryControl": [
+        "devices:local",
+        "Battery:SmartBatteryControl:Enable",
+        "Kostal Smart Battery Control Enable",
+        None,
+        "mdi:lock-smart",
+    ],
 }
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -456,8 +470,11 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     monitoredcondition = config[CONF_MONITORED_CONDITIONS]
 
     """ Login to Kostal Plenticore """
-    con = kostalplenticore.connect(host, password)
-    con.login()
+    try:
+        con = kostalplenticore.connect(host, password)
+        con.login()
+    except:
+        _LOGGER.error('Could not connect to kostal plenticore, please restart HA')
     if len(monitoredcondition) == 0:
         monitoredcondition = SENSOR_TYPES.keys()
     for sensor in monitoredcondition:
@@ -481,36 +498,58 @@ class plenticore(Entity):
     def getData(self):
         """Get sensor data."""
         if self.moduleid == "pv1+2":
-            pv1 = int(
-                self.api.getProcessdata("devices:local:pv1", [self.id])[0]["value"]
-            )
-            pv2 = int(
-                self.api.getProcessdata("devices:local:pv2", [self.id])[0]["value"]
-            )
-            value = pv1 + pv2
+            try:
+                pv1 = int(
+                    self.api.getProcessdata("devices:local:pv1", [self.id])[0]["value"]
+                )
+            except:
+                pv1 = "error"
+            try:
+                pv2 = int(
+                    self.api.getProcessdata("devices:local:pv2", [self.id])[0]["value"]
+                )
+            except:
+                pv2 = "error"
+            if(pv1 != "error" or pv2 != "error"):
+                value = pv1 + pv2
+            else:
+                value= "error"
         elif (
             self.id == "Frequency"
             or self.id == "L3_I"
             or self.id == "L2_I"
             or self.id == "L1_I"
         ):
-            value = (
-                "%.2f" % self.api.getProcessdata(self.moduleid, [self.id])[0]["value"]
-            )
+            try:
+                value = (
+                    "%.2f" % self.api.getProcessdata(self.moduleid, [self.id])[0]["value"]
+                    )
+            except:
+                value = "error"
+        elif (
+            self.id == "Battery:MinSoc"
+            or self.id == "Battery:SmartBatteryControl:Enable"
+            ):
+            try:
+                value = int(
+                    self.api.getSettings(self.moduleid, [self.id])[0]["value"]
+                )
+            except:
+                value = "error"
         elif self._unit_of_measurement == ENERGY_KILO_WATT_HOUR:
             try:
                 value = "%.2f" % (
                     self.api.getProcessdata(self.moduleid, [self.id])[0]["value"] / 1000
                 )
             except:
-                value = 0
+                value = "error"
         else:
             try:
                 value = int(
                     self.api.getProcessdata(self.moduleid, [self.id])[0]["value"]
                 )
             except:
-                value = 0
+                value = "error"
         return value
 
     def __init__(self, con, sensorname, moduleid, id, unit, icon):
@@ -521,7 +560,12 @@ class plenticore(Entity):
         self.id = id
         self.mdi = icon
         self._unit_of_measurement = unit
-        self._state = self.getData()
+        value = self.getData()
+        if(value != "error"):
+            self._state = value
+            self._available = True
+        else:
+            self._available = False
 
     @property
     def name(self):
@@ -541,7 +585,7 @@ class plenticore(Entity):
     @property
     def available(self):
         """Could the device be accessed during the last update call."""
-        return True
+        return self._available
 
     @property
     def unit_of_measurement(self):
@@ -554,4 +598,9 @@ class plenticore(Entity):
         This is the only method that should fetch new data for Home Assistant.
         """
         # self._state = 23
-        self._state = self.getData()
+        value = self.getData()
+        if(value != "error"):
+            self._state = value
+            self._available = True
+        else:
+            self._available = False
