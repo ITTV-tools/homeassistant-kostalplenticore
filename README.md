@@ -82,6 +82,8 @@ sensor:
         - OwnConsumptionRateMonth
         - OwnConsumptionRateTotal
         - OwnConsumptionRateYear
+        - MinSoC
+        - SmartBatteryControl
         
 ```
 
