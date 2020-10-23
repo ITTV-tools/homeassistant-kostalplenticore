@@ -3,7 +3,7 @@
   "name": "Kostal Plenticore Inverter",
   "documentation": "https://www.home-assistant.io/integrations/kostalplenticore/",
   "dependencies": [],
-  "requirements": ["kostalplenticore"],
+  "requirements": ["kostalplenticore==0.3"],
   "codeowners": [
     "@ITTV-Tools"
   ]
