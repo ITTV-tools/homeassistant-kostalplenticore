@@ -6,7 +6,7 @@ import json
 
 from async_timeout import timeout
 from homeassistant.util.dt import utcnow
-from homeassistant.const import CONF_HOST
+from homeassistant.const import CONF_HOST, CONF_PASSWORD
 from homeassistant.helpers.typing import HomeAssistantType
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 import kostalplenticore
@@ -22,7 +22,7 @@ class KostalDataUpdateCoordinator(DataUpdateCoordinator):
     def __init__(self, hass: HomeAssistantType, *, config: dict, options: dict):
         """Initialize global kostalplenticore data updater."""
         self._host = config[CONF_HOST]
-        self._password = config['password']
+        self._password = config[CONF_PASSWORD]
         #self._info = None
         #self._setup = None
         self._next_update = 0
