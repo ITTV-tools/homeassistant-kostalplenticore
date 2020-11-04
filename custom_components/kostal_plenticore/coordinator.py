@@ -49,7 +49,7 @@ class KostalDataUpdateCoordinator(DataUpdateCoordinator):
         )
 
     async def _async_update_data(self) -> dict:
-        """Fetch data from NZBGet."""
+        """Fetch data from API."""
 
         def _update_data() -> dict:
             con.getBatteryPercent()
