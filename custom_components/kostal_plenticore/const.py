@@ -1,4 +1,5 @@
 """Constants for the kostal_plenticore integration."""
+from datetime import timedelta
 from homeassistant.const import (
     CONF_HOST,
     CONF_MONITORED_CONDITIONS,
@@ -16,6 +17,10 @@ from homeassistant.const import (
 
 DOMAIN = "kostal_plenticore"
 
+DATA_COORDINATOR = "coordinator"
+
+
+MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=10)
 
 SENSOR_TYPES = {
     "BatteryPercent": [
