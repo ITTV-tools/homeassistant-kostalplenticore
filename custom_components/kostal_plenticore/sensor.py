@@ -31,7 +31,7 @@ SENSOR_TYPES = {
     "BatteryPercent": [
         "devices:local:battery",
         "SoC",
-        "Kostal Battery",
+        "Kostal Battery State of Charge",
         PERCENTAGE,
         "mdi:battery-high",
     ],
@@ -126,7 +126,13 @@ SENSOR_TYPES = {
         ELECTRICAL_CURRENT_AMPERE,
         "mdi:solar-power",
     ],
-    "PVPower": ["pv1+2", "P", "Kostal pv power", POWER_WATT, "mdi:solar-power"],
+    "PVPower": [
+        "pv1+2", 
+        "P", 
+        "Kostal PV Power", 
+        POWER_WATT, 
+        "mdi:solar-power"
+    ],
     "DCPower": [
         "devices:local",
         "Dc_P",
