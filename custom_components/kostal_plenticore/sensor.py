@@ -171,7 +171,7 @@ SENSOR_TYPES = {
     "HomeConsumptionDay": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHome:Day",
-        "Kostal Home consumption Day",
+        "Kostal Home Consumption Day",
         ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
@@ -220,7 +220,7 @@ SENSOR_TYPES = {
     "HomeConsumptionFromBatYear": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomeBat:Year",
-        "Kostal Home consumption from Battery Year",
+        "Kostal Home Consumption from Battery Year",
         ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
@@ -269,7 +269,7 @@ SENSOR_TYPES = {
     "HomeConsumptionFromPVTotal": [
         "scb:statistic:EnergyFlow",
         "Statistic:EnergyHomePv:Total",
-        "Kostal Home consumption from PV Total",
+        "Kostal Home Consumption from PV Total",
         ENERGY_KILO_WATT_HOUR,
         "mdi:power-plug",
     ],
@@ -423,7 +423,7 @@ SENSOR_TYPES = {
     "OwnConsumptionRateMonth": [
         "scb:statistic:EnergyFlow",
         "Statistic:OwnConsumptionRate:Month",
-        "Kostal OwnConsumptionRate Month",
+        "Kostal Own Consumption Rate Month",
         PERCENTAGE,
         "mdi:percent",
     ],
