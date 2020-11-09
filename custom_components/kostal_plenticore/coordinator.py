@@ -16,6 +16,7 @@ from .const import DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
+
 class KostalDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching MYPV data."""
 
