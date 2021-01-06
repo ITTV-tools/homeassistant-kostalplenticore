@@ -501,7 +501,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 class plenticore(Entity):
     """Representation of a Sensor."""
 
-    def getData(self):
+    def getData(self):environment
         """Get sensor data."""
         if self.moduleid == "pv1+2":
             try:
@@ -516,7 +516,7 @@ class plenticore(Entity):
                 )
             except:
                 pv2 = "error"
-            if(pv1 != "error" or pv2 != "error"):
+            if(pv1 != "error" and pv2 != "error"):
                 value = pv1 + pv2
             else:
                 value= "error"
