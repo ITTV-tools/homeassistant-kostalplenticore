@@ -501,7 +501,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 class plenticore(Entity):
     """Representation of a Sensor."""
 
-    def getData(self):environment
+    def getData(self):
         """Get sensor data."""
         if self.moduleid == "pv1+2":
             try:
