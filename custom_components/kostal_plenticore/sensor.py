@@ -126,8 +126,29 @@ SENSOR_TYPES = {
         ELECTRICAL_CURRENT_AMPERE,
         "mdi:solar-power",
     ],
+    "PV3Power": [
+        "devices:local:pv3",
+        "P",
+        "Kostal PV3 Power",
+        POWER_WATT,
+        "mdi:solar-power",
+    ],
+    "PV3Voltage": [
+        "devices:local:pv3",
+        "U",
+        "Kostal PV3 Voltage",
+        VOLT,
+        "mdi:solar-power",
+    ],
+    "PV3Current": [
+        "devices:local:pv3",
+        "I",
+        "Kostal PV3 Current",
+        ELECTRICAL_CURRENT_AMPERE,
+        "mdi:solar-power",
+    ],
     "PVPower": [
-        "pv1+2", 
+        "pv1+2+3",
         "P", 
         "Kostal PV Power", 
         POWER_WATT, 
@@ -503,7 +524,7 @@ class plenticore(Entity):
 
     def getData(self):
         """Get sensor data."""
-        if self.moduleid == "pv1+2":
+        if self.moduleid == "pv1+2+3":
             try:
                 pv1 = int(
                     self.api.getProcessdata("devices:local:pv1", [self.id])[0]["value"]
@@ -516,8 +537,14 @@ class plenticore(Entity):
                 )
             except:
                 pv2 = "error"
-            if(pv1 != "error" and pv2 != "error"):
-                value = pv1 + pv2
+            try:
+                pv3 = int(
+                    self.api.getProcessdata("devices:local:pv2", [self.id])[0]["value"]
+                )
+            except:
+                pv3 = "error"
+            if(pv1 != "error" and pv2 != "error" and pv3 != "error"):
+                value = pv1 + pv2 + pv3
             else:
                 value= "error"
         elif (
