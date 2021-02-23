@@ -1,6 +1,6 @@
 # homeassistant-kostalplenticore
 
-Home Assistant Component for Kostal Plenticore 
+Home Assistant Component for Kostal Plenticore
 
 <a href="https://www.buymeacoffee.com/ittv" target="_blank"><img height="41px" width="167px" src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee"></a>
 
@@ -23,6 +23,7 @@ sensor:
     - platform: kostal_plenticore
       host: <IP>
       password: <Password>
+      DC_Inputs: 2 #Optional Default 2 (2,3)
       monitored_conditions:
         - BatteryPercent
         - BatteryCycles
@@ -48,6 +49,9 @@ sensor:
         - PV2Power
         - PV2Voltage
         - PV2Current
+        - PV3Power
+        - PV3Voltage
+        - PV3Current
         - ACFrequency
         - ACL1Current
         - ACL1Power
@@ -84,6 +88,5 @@ sensor:
         - OwnConsumptionRateYear
         - MinSoC
         - SmartBatteryControl
-        
-```
 
+```
