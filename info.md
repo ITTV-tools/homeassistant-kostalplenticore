@@ -88,5 +88,8 @@ sensor:
         - OwnConsumptionRateYear
         - MinSoC
         - SmartBatteryControl
+        - InverterState
+        - LimitEvuAbs
+
 
 ```
