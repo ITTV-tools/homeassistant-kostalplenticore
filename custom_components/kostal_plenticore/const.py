@@ -446,7 +446,14 @@ SENSOR_TYPES = {
         "Kostal LimitEvuAbs",
         POWER_WATT,
         "mdi:lock-smart",
-    ]
+    ],
+    "InverterState": [
+        "devices:local",
+        "Inverter:State",
+        "Kostal Inverter State",
+        None,
+        "mdi:solar-panel",
+    ],
 }
 
 SENSORS_DC3 = {
