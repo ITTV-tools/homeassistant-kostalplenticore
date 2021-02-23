@@ -439,6 +439,13 @@ SENSOR_TYPES = {
         "Kostal Smart Battery Control Enable",
         None,
         "mdi:lock-smart",
+    ],
+    "LimitEvuAbs": [
+        "devices:local",
+        "LimitEvuAbs",
+        "Kostal LimitEvuAbs",
+        POWER_WATT,
+        "mdi:lock-smart",
     ]
 }
 
