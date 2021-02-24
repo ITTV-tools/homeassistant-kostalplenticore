@@ -7,7 +7,7 @@ import voluptuous as vol
 import json
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-from .const import SENSOR_TYPES, SENSORS_DC3
+from .const import CONF_DCINPUTS, CONF_DCINPUTS_DEFAULT, SENSOR_TYPES, SENSORS_DC2, SENSORS_DC3
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 
@@ -21,15 +21,14 @@ from homeassistant.const import (
 """Platform for sensor integration."""
 
 _LOGGER = logging.getLogger(__name__)
-CONF_DCINPUTS = "DC_Inputs"
-CONF_DCINPUTS_Default = 2
+
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_HOST): cv.string,
         vol.Required(CONF_PASSWORD): cv.string,
-        vol.Optional(CONF_DCINPUTS, default=CONF_DCINPUTS_Default): vol.In([2, 3]),
+        vol.Optional(CONF_DCINPUTS, default=CONF_DCINPUTS_DEFAULT): vol.In([1, 2, 3]),
         vol.Optional(CONF_MONITORED_CONDITIONS, default=[]): vol.All(
-            cv.ensure_list, [vol.In({**SENSOR_TYPES, **SENSORS_DC3})]
+            cv.ensure_list, [vol.In({**SENSOR_TYPES, **SENSORS_DC2, **SENSORS_DC3})]
         ),
     }
 )
@@ -40,7 +39,6 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     host = config[CONF_HOST]
     password = config[CONF_PASSWORD]
     monitoredcondition = config[CONF_MONITORED_CONDITIONS]
-    #_LOGGER.error(config[CONF_DCINPUTS])
 
     """ Login to Kostal Plenticore """
     try:
@@ -48,22 +46,40 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         con.login()
     except:
         _LOGGER.error('Could not connect to kostal plenticore, please restart HA')
+
+    """ All sensors """
+    allSensors = {**SENSOR_TYPES, **SENSORS_DC2, **SENSORS_DC3}
+
+    """ If there're no monitored conditions use all possible values """
     if len(monitoredcondition) == 0:
-    	if(config[CONF_DCINPUTS] == 3):
-    		monitoredcondition = {**monitoredcondition, **SENSORS_DC3}
+    	if(config[CONF_DCINPUTS] == 2):
+    	    monitoredcondition = {**SENSOR_TYPES, **SENSORS_DC2}
+    	elif(config[CONF_DCINPUTS] == 3):
+    		monitoredcondition = allSensors
     	else:
         	monitoredcondition = SENSOR_TYPES.keys()
+    else:
+        """ Remove keys that do not match dccount """
+        if(config[CONF_DCINPUTS] < 3):
+            for dc3sensorKey in SENSORS_DC3.keys():
+                _LOGGER.warning('Ignoring monitored condition %s due to dc_inputs: %d', dc3sensorKey, config[CONF_DCINPUTS])
+                monitoredcondition.remove(dc3sensorKey)
+        if(config[CONF_DCINPUTS] < 2):
+            for dc2sensorKey in SENSORS_DC2.keys():
+                _LOGGER.warning('Ignoring monitored condition %s due to dc_inputs: %d', dc2sensorKey, config[CONF_DCINPUTS])
+                monitoredcondition.remove(dc2sensorKey)
+
 
     for sensor in monitoredcondition:
         add_entities(
             [
                 plenticore(
                     con,
-                    SENSOR_TYPES[sensor][2],
-                    SENSOR_TYPES[sensor][0],
-                    SENSOR_TYPES[sensor][1],
-                    SENSOR_TYPES[sensor][3],
-                    SENSOR_TYPES[sensor][4],
+                    allSensors[sensor][2],
+                    allSensors[sensor][0],
+                    allSensors[sensor][1],
+                    allSensors[sensor][3],
+                    allSensors[sensor][4],
                     config[CONF_DCINPUTS],
                 )
             ]
@@ -82,28 +98,29 @@ class plenticore(Entity):
                 )
             except:
                 pv1 = "error"
+
             try:
-                pv2 = int(
-                    self.api.getProcessdata("devices:local:pv2", [self.id])[0]["value"]
-                )
+                pv2 = 0
+                if(self.dccount > 1):
+                    pv2 = int(
+                        self.api.getProcessdata("devices:local:pv2", [self.id])[0]["value"]
+                    )
             except:
                 pv2 = "error"
-            if(self.dccount == 3):
-            	try:
-                	pv3 = int(
-               	        self.api.getProcessdata("devices:local:pv3", [self.id])[0]["value"]
-                	)
-            	except:
-                	pv3 = "error"
-            	if(pv1 != "error" and pv2 != "error" and pv3 != "error"):
-            		value = pv1 + pv2 + pv3
-            	else:
-                	value= "error"
+
+            try:
+                pv3 = 0
+                if(self.dccount > 2):
+                    pv3 = int(
+                        self.api.getProcessdata("devices:local:pv3", [self.id])[0]["value"]
+                    )
+            except:
+                pv3 = "error"
+
+            if(pv1 != "error" and pv2 != "error" and pv3 != "error"):
+                value = pv1 + pv2 + pv3
             else:
-                if(pv1 != "error" and pv2 != "error"):
-                    value = pv1 + pv2
-                else:
-                    value= "error"
+                value= "error"
 
         elif (
             self.id == "Frequency"
