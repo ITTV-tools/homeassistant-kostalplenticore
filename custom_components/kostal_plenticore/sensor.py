@@ -62,12 +62,14 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         """ Remove keys that do not match dccount """
         if(config[CONF_DCINPUTS] < 3):
             for dc3sensorKey in SENSORS_DC3.keys():
-                _LOGGER.warning('Ignoring monitored condition %s due to dc_inputs: %d', dc3sensorKey, config[CONF_DCINPUTS])
-                monitoredcondition.remove(dc3sensorKey)
+                if(dc3sensorKey in monitoredcondition):
+                	_LOGGER.warning('Ignoring monitored condition %s due to dc_inputs: %d', dc3sensorKey, config[CONF_DCINPUTS])
+                	monitoredcondition.remove(dc3sensorKey)
         if(config[CONF_DCINPUTS] < 2):
             for dc2sensorKey in SENSORS_DC2.keys():
-                _LOGGER.warning('Ignoring monitored condition %s due to dc_inputs: %d', dc2sensorKey, config[CONF_DCINPUTS])
-                monitoredcondition.remove(dc2sensorKey)
+                if(dc3sensorKey in monitoredcondition):
+                	monitoredcondition.remove(dc2sensorKey)
+                	_LOGGER.warning('Ignoring monitored condition %s due to dc_inputs: %d', dc2sensorKey, config[CONF_DCINPUTS])
 
 
     for sensor in monitoredcondition:
