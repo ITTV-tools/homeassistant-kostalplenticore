@@ -12,6 +12,9 @@ from homeassistant.const import (
     POWER_WATT,
 )
 
+CONF_DCINPUTS = "dc_inputs"
+CONF_DCINPUTS_DEFAULT = 2
+
 SENSOR_TYPES = {
     "BatteryPercent": [
         "devices:local:battery",
@@ -87,27 +90,6 @@ SENSOR_TYPES = {
         "devices:local:pv1",
         "I",
         "Kostal PV1 Current",
-        ELECTRICAL_CURRENT_AMPERE,
-        "mdi:solar-power",
-    ],
-    "PV2Power": [
-        "devices:local:pv2",
-        "P",
-        "Kostal PV2 Power",
-        POWER_WATT,
-        "mdi:solar-power",
-    ],
-    "PV2Voltage": [
-        "devices:local:pv2",
-        "U",
-        "Kostal PV2 Voltage",
-        VOLT,
-        "mdi:solar-power",
-    ],
-    "PV2Current": [
-        "devices:local:pv2",
-        "I",
-        "Kostal PV2 Current",
         ELECTRICAL_CURRENT_AMPERE,
         "mdi:solar-power",
     ],
@@ -475,6 +457,30 @@ SENSORS_DC3 = {
         "devices:local:pv3",
         "I",
         "Kostal PV3 Current",
+        ELECTRICAL_CURRENT_AMPERE,
+        "mdi:solar-power",
+    ]
+}
+
+SENSORS_DC2 = {
+    "PV2Power": [
+        "devices:local:pv2",
+        "P",
+        "Kostal PV2 Power",
+        POWER_WATT,
+        "mdi:solar-power",
+    ],
+    "PV2Voltage": [
+        "devices:local:pv2",
+        "U",
+        "Kostal PV2 Voltage",
+        VOLT,
+        "mdi:solar-power",
+    ],
+    "PV2Current": [
+        "devices:local:pv2",
+        "I",
+        "Kostal PV2 Current",
         ELECTRICAL_CURRENT_AMPERE,
         "mdi:solar-power",
     ]

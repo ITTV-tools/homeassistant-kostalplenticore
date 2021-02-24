@@ -23,7 +23,7 @@ sensor:
     - platform: kostal_plenticore
       host: <IP>
       password: <Password>
-      DC_Inputs: 2 #Optional Default 2 (2,3)
+      dc_inputs: 2 # Optional, default: 2, valid values: 1, 2, 3
       monitored_conditions:
         - BatteryPercent
         - BatteryCycles
@@ -92,3 +92,6 @@ sensor:
         - LimitEvuAbs
 
 ```
+Note: 
+* PV2* sensors will be ignored if dc_inputs < 2
+* PV3* sensors will be ignored if dc_inputs < 3
