@@ -24,6 +24,7 @@ sensor:
       host: <IP>
       password: <Password>
       dc_inputs: 2 # Optional, default: 2, valid values: 1, 2, 3
+      scan_interval: 30 # Optional, default: 30
       monitored_conditions:
         - BatteryPercent
         - BatteryCycles
