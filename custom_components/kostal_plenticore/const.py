@@ -436,6 +436,27 @@ SENSOR_TYPES = {
         None,
         "mdi:solar-panel",
     ],
+    "SerialNumber": [
+        "devices:local",
+        "Properties:SerialNo",
+        "Kostal Inverter Serial Number",
+        None,
+        "mdi:barcode"
+    ],
+    "ArticleNumber": [
+        "devices:local",
+        "Properties:ArtNo",
+        "Kostal Inverter Article Number",
+        None,
+        "mdi:barcode"
+    ],
+    "ProductName": [
+        "devices:local",
+        "ProductName",
+        "Kostal Inverter Product Name",
+        None,
+        "mdi:label"
+    ]
 }
 
 SENSORS_DC3 = {

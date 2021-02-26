@@ -145,6 +145,22 @@ class plenticore(Entity):
                     )
             except:
                 value = "error"
+        elif (self.id == "ProductName"):
+            try:
+                settingsVals = self.api.getSettings(self.moduleid, ["Branding:ProductName1", "Branding:ProductName2"])
+                value = settingsVals[0]["value"] + " " + settingsVals[1]["value"]
+                value = value.strip()
+            except:
+                value = "error"
+        
+        elif (
+            self.id == "Properties:SerialNo"
+            or self.id == "Properties:ArtNo"
+        ):
+            try:
+                value = self.api.getSettings(self.moduleid, [self.id])[0]["value"]
+            except:
+                value = "error"        
         elif (
             self.id == "Battery:MinSoc"
             or self.id == "Battery:SmartBatteryControl:Enable"

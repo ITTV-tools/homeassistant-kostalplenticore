@@ -91,6 +91,9 @@ sensor:
         - SmartBatteryControl
         - InverterState
         - LimitEvuAbs
+        - SerialNumber
+        - ArticleNumber
+        - ProductName
 
 ```
 Note: 
