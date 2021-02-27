@@ -6,8 +6,15 @@ import kostalplenticore
 import voluptuous as vol
 import json
 
+from homeassistant.exceptions import PlatformNotReady
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-from .const import CONF_DCINPUTS, CONF_DCINPUTS_DEFAULT, SENSOR_TYPES, SENSORS_DC2, SENSORS_DC3
+from .const import (
+    CONF_DCINPUTS, 
+    CONF_DCINPUTS_DEFAULT, 
+    SENSOR_TYPES, 
+    SENSORS_DC2, 
+    SENSORS_DC3
+)
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 
@@ -44,8 +51,9 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     try:
         con = kostalplenticore.connect(host, password)
         con.login()
-    except:
-        _LOGGER.error('Could not connect to kostal plenticore, please restart HA')
+    except Exception as e:
+        _LOGGER.warning('Could not connect to kostal plenticore %s: %s', host, str(e))
+        raise PlatformNotReady
 
     """ All sensors """
     allSensors = {**SENSOR_TYPES, **SENSORS_DC2, **SENSORS_DC3}
@@ -82,7 +90,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
                     allSensors[sensor][1],
                     allSensors[sensor][3],
                     allSensors[sensor][4],
-                    config[CONF_DCINPUTS],
+                    config,
                 )
             ]
         )
@@ -94,6 +102,7 @@ class plenticore(Entity):
     def getData(self):
         """Get sensor data."""
         if self.moduleid == "pvcombined":
+            dccount = self.config[CONF_DCINPUTS]
             try:
                 pv1 = int(
                     self.api.getProcessdata("devices:local:pv1", [self.id])[0]["value"]
@@ -103,7 +112,7 @@ class plenticore(Entity):
 
             try:
                 pv2 = 0
-                if(self.dccount > 1):
+                if(dccount > 1):
                     pv2 = int(
                         self.api.getProcessdata("devices:local:pv2", [self.id])[0]["value"]
                     )
@@ -112,7 +121,7 @@ class plenticore(Entity):
 
             try:
                 pv3 = 0
-                if(self.dccount > 2):
+                if(dccount > 2):
                     pv3 = int(
                         self.api.getProcessdata("devices:local:pv3", [self.id])[0]["value"]
                     )
@@ -136,6 +145,22 @@ class plenticore(Entity):
                     )
             except:
                 value = "error"
+        elif (self.id == "ProductName"):
+            try:
+                settingsVals = self.api.getSettings(self.moduleid, ["Branding:ProductName1", "Branding:ProductName2"])
+                value = settingsVals[0]["value"] + " " + settingsVals[1]["value"]
+                value = value.strip()
+            except:
+                value = "error"
+        
+        elif (
+            self.id == "Properties:SerialNo"
+            or self.id == "Properties:ArtNo"
+        ):
+            try:
+                value = self.api.getSettings(self.moduleid, [self.id])[0]["value"]
+            except:
+                value = "error"        
         elif (
             self.id == "Battery:MinSoc"
             or self.id == "Battery:SmartBatteryControl:Enable"
@@ -162,15 +187,15 @@ class plenticore(Entity):
                 value = "error"
         return value
 
-    def __init__(self, con, sensorname, moduleid, id, unit, icon, dccount):
+    def __init__(self, apiConnection, sensorname, moduleid, id, unit, icon, config):
         """Initialize the sensor."""
-        self.api = con
+        self.api = apiConnection
         self.sensorname = sensorname
         self.moduleid = moduleid
         self.id = id
         self.mdi = icon
         self._unit_of_measurement = unit
-        self.dccount = dccount
+        self.config = config
         value = self.getData()
         if(value != "error"):
             self._state = value
@@ -204,11 +229,10 @@ class plenticore(Entity):
         return self._unit_of_measurement
 
     def update(self):
-        """Fetch new state data for the sensor.
-
+        """
+        Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
-        # self._state = 23
         value = self.getData()
         if(value != "error"):
             self._state = value
