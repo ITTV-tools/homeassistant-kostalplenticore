@@ -6,8 +6,8 @@ from homeassistant.const import (
     ENERGY_KILO_WATT_HOUR,
     MASS_GRAMS,
     FREQUENCY_HERTZ,
-    ELECTRICAL_CURRENT_AMPERE,
-    VOLT,
+    ELECTRIC_CURRENT_AMPERE,
+    ELECTRIC_POTENTIAL_VOLT,
     PERCENTAGE,
     POWER_WATT,
 )
@@ -83,14 +83,14 @@ SENSOR_TYPES = {
         "devices:local:pv1",
         "U",
         "Kostal PV1 Voltage",
-        VOLT,
+        ELECTRIC_POTENTIAL_VOLT,
         "mdi:solar-power",
     ],
     "PV1Current": [
         "devices:local:pv1",
         "I",
         "Kostal PV1 Current",
-        ELECTRICAL_CURRENT_AMPERE,
+        ELECTRIC_CURRENT_AMPERE,
         "mdi:solar-power",
     ],
     "PVPower": [
@@ -314,7 +314,7 @@ SENSOR_TYPES = {
         "devices:local:ac",
         "L1_I",
         "Kostal L1 Current",
-        ELECTRICAL_CURRENT_AMPERE,
+        ELECTRIC_CURRENT_AMPERE,
         "mdi:power-plug",
     ],
     "ACL1Power": [
@@ -328,14 +328,14 @@ SENSOR_TYPES = {
         "devices:local:ac",
         "L1_U",
         "Kostal L1 Voltage",
-        VOLT,
+        ELECTRIC_POTENTIAL_VOLT,
         "mdi:power-plug",
     ],
     "ACL2Current": [
         "devices:local:ac",
         "L2_I",
         "Kostal L2 Current",
-        ELECTRICAL_CURRENT_AMPERE,
+        ELECTRIC_CURRENT_AMPERE,
         "mdi:power-plug",
     ],
     "ACL2Power": [
@@ -349,14 +349,14 @@ SENSOR_TYPES = {
         "devices:local:ac",
         "L2_U",
         "Kostal L2 Voltage",
-        VOLT,
+        ELECTRIC_POTENTIAL_VOLT,
         "mdi:power-plug",
     ],
     "ACL3Current": [
         "devices:local:ac",
         "L3_I",
         "Kostal L3 Current",
-        ELECTRICAL_CURRENT_AMPERE,
+        ELECTRIC_CURRENT_AMPERE,
         "mdi:power-plug",
     ],
     "ACL3Power": [
@@ -370,7 +370,7 @@ SENSOR_TYPES = {
         "devices:local:ac",
         "L3_U",
         "Kostal L3 Voltage",
-        VOLT,
+        ELECTRIC_POTENTIAL_VOLT,
         "mdi:power-plug",
     ],
     "OwnConsumptionRateDay": [
@@ -471,14 +471,14 @@ SENSORS_DC3 = {
         "devices:local:pv3",
         "U",
         "Kostal PV3 Voltage",
-        VOLT,
+        ELECTRIC_POTENTIAL_VOLT,
         "mdi:solar-power",
     ],
     "PV3Current": [
         "devices:local:pv3",
         "I",
         "Kostal PV3 Current",
-        ELECTRICAL_CURRENT_AMPERE,
+        ELECTRIC_CURRENT_AMPERE,
         "mdi:solar-power",
     ]
 }
@@ -495,14 +495,14 @@ SENSORS_DC2 = {
         "devices:local:pv2",
         "U",
         "Kostal PV2 Voltage",
-        VOLT,
+        ELECTRIC_POTENTIAL_VOLT,
         "mdi:solar-power",
     ],
     "PV2Current": [
         "devices:local:pv2",
         "I",
         "Kostal PV2 Current",
-        ELECTRICAL_CURRENT_AMPERE,
+        ELECTRIC_CURRENT_AMPERE,
         "mdi:solar-power",
     ]
 }
